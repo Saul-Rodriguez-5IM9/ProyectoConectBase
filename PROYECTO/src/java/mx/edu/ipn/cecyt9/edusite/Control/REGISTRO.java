@@ -1,12 +1,13 @@
 
 package mx.edu.ipn.cecyt9.edusite.Control;
-
+import java.sql.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import mx.edu.ipn.cecyt9.edusite.Utilerias.Conexion;
 
 /**
  *
@@ -25,19 +26,7 @@ public class REGISTRO extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet REGISTRO</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet REGISTRO at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -52,6 +41,8 @@ public class REGISTRO extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+       
+        
         processRequest(request, response);
     }
 
@@ -66,6 +57,41 @@ public class REGISTRO extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>NOSI</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet CHIDO REGISTRO at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+         String ID="7";
+         String nombre;
+        nombre=request.getParameter("TUserName");
+        try{
+         Conexion Conexion= new Conexion();
+         Connection Conex= Conexion.getConexion();
+         String query= "Insert into usuario(idusuario, usuario, contraseña, correo, nombre, apellido_paterno, apellido_materno, telefono, idrol) values(?,?,?,?,?,?,?,?,?);";
+         PreparedStatement st=Conex.prepareStatement(query);
+    //aun no registra nada
+         
+         st.setString(1, ID);
+         st.setString(2, nombre);
+         
+         st.executeUpdate();
+         st.close();
+         Conex.close();
+        }
+        catch(Exception e){
+            System.out.println(e.toString());
+        }
+        
+        
         processRequest(request, response);
     }
 
