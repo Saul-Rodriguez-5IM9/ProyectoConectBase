@@ -59,26 +59,33 @@ public class REGISTRO extends HttpServlet {
             throws ServletException, IOException {
         
         
-        String nombre;
+        String nombre, contra,name, mail, ap, am, tel;
         nombre=request.getParameter("TUserName");
+        contra=request.getParameter("TContraseña1");
+        mail=request.getParameter("TMail");
+        
+        name=request.getParameter("TName");
+        ap=request.getParameter("TApellidoP");
+        am=request.getParameter("TApellidoM");
+        tel=request.getParameter("TTelefono");
+        
         
         try{
          Conexion Conexion= new Conexion("localhost","lab3","root", "n0m3l0");
          Connection Conex= Conexion.getConexion();
          String query= "Insert into usuario( usuario, contraseña, correo, nombre, apellido_paterno"
-                 + ", apellido_materno, telefono, idrol) values(?,?,?,?,?,?,?,?);";
+                 + ", apellido_materno, telefono) values(?,?,?,?,?,?,?);";
          PreparedStatement st=Conex.prepareStatement(query);
     
          
         
          st.setString(1, nombre);
-         st.setString(3,"PRUEBA");
-         st.setString(4,"PRUEBA");
-         st.setString(5,"PRUEBA");
-         st.setString(6,"PRUEBA");
-         st.setString(7,"PRUEBA");
-         st.setString(8,"1");
-         st.setString(2,"PRUEBA");
+         st.setString(3,mail);
+         st.setString(4,name);
+         st.setString(5,ap);
+         st.setString(6,am);
+         st.setString(7,tel);
+         st.setString(2,contra);
 
          
          st.executeUpdate();
