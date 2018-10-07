@@ -57,8 +57,42 @@ public class REGISTRO extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        
+        String nombre;
+        nombre=request.getParameter("TUserName");
+        
+        try{
+         Conexion Conexion= new Conexion("localhost","lab3","root", "n0m3l0");
+         Connection Conex= Conexion.getConexion();
+         String query= "Insert into usuario( usuario, contraseña, correo, nombre, apellido_paterno"
+                 + ", apellido_materno, telefono, idrol) values(?,?,?,?,?,?,?,?);";
+         PreparedStatement st=Conex.prepareStatement(query);
+    
+         
+        
+         st.setString(1, nombre);
+         st.setString(3,"PRUEBA");
+         st.setString(4,"PRUEBA");
+         st.setString(5,"PRUEBA");
+         st.setString(6,"PRUEBA");
+         st.setString(7,"PRUEBA");
+         st.setString(8,"1");
+         st.setString(2,"PRUEBA");
+
+         
+         st.executeUpdate();
+         st.close();
+         Conex.close();
+            System.out.println("IT WORKED :DDD");
+        }
+        catch(SQLException e){
+            System.out.println(e.toString());
+            System.out.println("YA VALIO");
+        }
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        
+        PrintWriter out = response.getWriter();
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -66,31 +100,10 @@ public class REGISTRO extends HttpServlet {
             out.println("<title>NOSI</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CHIDO REGISTRO at " + request.getContextPath() + "</h1>");
+            out.println("<h1>REGISTRO EXITOSO, BIENVENIDO,"+nombre+" </h1>");
             out.println("</body>");
             out.println("</html>");
-        }
-         String ID="7";
-         String nombre;
-        nombre=request.getParameter("TUserName");
-        try{
-         Conexion Conexion= new Conexion();
-         Connection Conex= Conexion.getConexion();
-         String query= "Insert into usuario(idusuario, usuario, contraseña, correo, nombre, apellido_paterno, apellido_materno, telefono, idrol) values(?,?,?,?,?,?,?,?,?);";
-         PreparedStatement st=Conex.prepareStatement(query);
-    //aun no registra nada
-         
-         st.setString(1, ID);
-         st.setString(2, nombre);
-         
-         st.executeUpdate();
-         st.close();
-         Conex.close();
-        }
-        catch(Exception e){
-            System.out.println(e.toString());
-        }
-        
+               
         
         processRequest(request, response);
     }
